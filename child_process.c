@@ -6,7 +6,7 @@
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:04:59 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/05 15:59:19 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:53:03 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,32 @@ void	free_before_exit(t_args *args, int argc, int i)
 	free(args->pid);
 }
 
-void	child_proc(t_args *args, char **argv, int argc, int i)
+int	check_before_dup(t_args *args, char **argv, int argc, int i)
 {
-	int	err_dup_r;
-	int	err_dup_w;
-
 	if ((i == 0 && args->fd_file1 < 0) || (i == argc - 4 - args->here_doc
 			&& args->fd_file2 < 0))
 	{
 		args->arg = NULL;
 		free_before_exit(args, argc, i);
-		exit(1);
+		args->exit_code = 1;
+		return (1);
 	}
 	if (init_cmds(args, argv[i + 2 + args->here_doc]))
 	{
 		free_before_exit(args, argc, i);
-		exit(127);
+		args->exit_code = 127;
+		return (2);
 	}
+	return (0);
+}
+
+void	child_proc(t_args *args, char **argv, int argc, int i)
+{
+	int	err_dup_r;
+	int	err_dup_w;
+
+	if (check_before_dup(args, argv, argc, i))
+		exit(args->exit_code);
 	close_before_dup(args, argc, i, 0);
 	if (i == 0 && args->fd_file1 > 0)
 		err_dup_r = dup2(args->fd_file1, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:12:38 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/05 12:08:12 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:05:40 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	pipex(t_args *args, char **argv, int argc)
 			child_proc(args, argv, argc, i);
 		i++;
 	}
-	printf("DEBUG: %d\n", parent_proc(args, argc));
+	parent_proc(args, argc);
 	free(args->pid);
 	free_pipe(args, argc - 5 - args->here_doc);
 	return (0);

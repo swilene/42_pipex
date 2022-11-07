@@ -6,7 +6,7 @@
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:10:46 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/05 14:29:21 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:27:03 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_args
 	int		here_doc;
 	int		create_hd;
 	int		*pid;
+	int		exit_code;
 }	t_args;
 
 int		init_files(int argc, char **argv, t_args *args);
@@ -46,7 +47,7 @@ void	free_str(char **str);
 void	close_files(t_args *args, int argc, int i);
 void	close_fd_pipe(t_args *args, int argc);
 int		init_cmds(t_args *args, char *cmd);
-int		parent_proc(t_args *args, int argc);
+void	parent_proc(t_args *args, int argc);
 void	child_proc(t_args *args, char **argv, int argc, int i);
 void	free_pipe(t_args *args, int i);
 int		init_heredoc(t_args *args, char **argv);

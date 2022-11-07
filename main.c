@@ -6,7 +6,7 @@
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:09:57 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/03 11:53:35 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:58:35 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_args	args;
-
+	
 	if (argc >= 5)
 	{
 		args.env = envp;
@@ -24,5 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		args.path = get_path(envp);
 		init_files(argc, argv, &args);
 	}
-	return (0);
+	else
+		args.exit_code = 127;
+	return (args.exit_code);
 }
