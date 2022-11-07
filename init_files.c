@@ -6,7 +6,7 @@
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:37:04 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/05 15:28:59 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:09:44 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	init_fds(t_args *args)
 {
 	args->here_doc = 0;
 	args->fd_file1 = open(args->file1, O_RDONLY);
-	if (access(args->file1, R_OK) == 0 && args->fd_file1 < 0)
+	if (access(args->file1, R_OK) == -1 && args->fd_file1 < 0)
 		perror(args->file1);
 	args->fd_file2 = open(args->file2, O_RDWR | O_CREAT | O_TRUNC, 00644);
 	if (args->fd_file2 < 0)
