@@ -6,25 +6,33 @@
 #    By: saguesse <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 14:54:21 by saguesse          #+#    #+#              #
-#    Updated: 2022/11/07 18:08:12 by saguesse         ###   ########.fr        #
+#    Updated: 2022/11/07 17:49:06 by saguesse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME := pipex
 
-CC = gcc -g3
+CC := gcc -g3
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra
 
-LIBFT_PATH = ./libft
+LIBFT_PATH := ./libft
 
-LIBFT = $(LIBFT_PATH)/libft.a
+LIBFT := $(LIBFT_PATH)/libft.a
 
-PRINTF_PATH = ./libft/ft_printf
+PRINTF_PATH := ./libft/ft_printf
 
-PRINTF = $(PRINTF_PATH)/libftprintf.a
+PRINTF := $(PRINTF_PATH)/libftprintf.a
 
-SRC = main.c \
+SRC_DIR := sources
+
+SRC_BONUS_DIR := sources_bonus
+
+OBJ_DIR := objects
+
+OBJ_BONUS_DIR := objects_bonus
+
+SRC := main.c \
 	path.c \
 	init_files.c \
 	init_cmds.c \
@@ -43,6 +51,10 @@ BONUS_SRC := main_bonus.c \
 	child_process_bonus.c \
 	parent_process_bonus.c \
 
+SRC := $(SRC:%=$(SRC_DIR)/%)
+
+OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
 HEADER = pipex.h
 
 HEADER_BONUS = pipex_bonus.h
@@ -51,15 +63,13 @@ HEADER_LIBFT = $(LIBFT_PATH)/libft.h
 
 HEADER_PRINTF = $(PRINTF_PATH)/libftprintf.h
 
-OBJ = $(SRC:.c=.o)
-
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
 $(NAME): $(PRINTF) $(LIBFT) $(OBJ)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF)
 
-bonus: $(BONUS_OBJ)
-	$(CC) -o $(NAME) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(PRINTF)
+$(OBJ_DIR)/%.o: $(SRC_DIR)
+	$(CC)
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)
@@ -67,8 +77,13 @@ $(LIBFT):
 $(PRINTF):
 	make -C $(PRINTF_PATH)
 
-%.o : %.c $(HEADER) $(HEADER_BONUS) $(HEADER_LIBFT) $(HEADER_PRINTF)
+%.o : %.c $(HEADER) $(HEADER_LIBFT) $(HEADER_PRINTF)
 	$(CC) $(CFLAGS) -c $< -o $@ -I . -I libft -I libft/ft_printf
+
+
+bonus: $(BONUS_OBJ)
+	$(CC) -o $(NAME) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(PRINTF)
+	
 
 all: $(NAME) 
 
@@ -82,4 +97,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: bonus all clean fclean re

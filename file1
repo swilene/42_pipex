@@ -6,7 +6,7 @@
 #    By: saguesse <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 14:54:21 by saguesse          #+#    #+#              #
-#    Updated: 2022/11/07 18:08:12 by saguesse         ###   ########.fr        #
+#    Updated: 2022/11/07 18:02:35 by saguesse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,19 +53,17 @@ HEADER_PRINTF = $(PRINTF_PATH)/libftprintf.h
 
 OBJ = $(SRC:.c=.o)
 
-BONUS_OBJ = $(BONUS_SRC:.c=.o)
-
 $(NAME): $(PRINTF) $(LIBFT) $(OBJ)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF)
-
-bonus: $(BONUS_OBJ)
-	$(CC) -o $(NAME) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(PRINTF)
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
 $(PRINTF):
 	make -C $(PRINTF_PATH)
+
+bonus: $(BONUS_OBJ)
+	$(CC) -o $(NAME) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(PRINTF)
 
 %.o : %.c $(HEADER) $(HEADER_BONUS) $(HEADER_LIBFT) $(HEADER_PRINTF)
 	$(CC) $(CFLAGS) -c $< -o $@ -I . -I libft -I libft/ft_printf

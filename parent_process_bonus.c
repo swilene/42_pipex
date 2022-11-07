@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parent_process_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 14:09:57 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/07 16:27:02 by saguesse         ###   ########.fr       */
+/*   Created: 2022/10/24 17:18:39 by saguesse          #+#    #+#             */
+/*   Updated: 2022/11/07 15:04:39 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-int	main(int argc, char **argv, char **envp)
+void	parent_proc(t_args *args, int argc)
 {
-	t_args	args;
+	int	wstatus;
+	int	i;
 
-	if (argc == 5)
+	close_fd_pipe(args, argc);
+	close_files(args, argc, argc);
+	i = 0;
+	while (i < argc - 3 - args->here_doc)
 	{
-		args.env = envp;
-		args.file1 = argv[1];
-		args.file2 = argv[argc - 1];
-		args.path = get_path(envp);
-		init_files(argc, argv, &args);
+		waitpid(args->pid[i], &wstatus, 0);
+		if (WIFEXITED(wstatus))
+			args->exit_code = WEXITSTATUS(wstatus);
+		i++;
 	}
-	else
-	{
-		if (argc < 5)
-			ft_printf("Too few arguments.\n");
-		else
-			ft_printf("Too many arguments.\n");
-		args.exit_code = 127;
-	}
-	return (args.exit_code);
 }

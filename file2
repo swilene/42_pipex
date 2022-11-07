@@ -1,0 +1,83 @@
+# **************************************************************************** #
+#                                                                              #
+#    ::::::::      :::                                                         #
+#    :+:    :+:      :+:                                           elifekaM    #
+#      +:+         +:+ +:+                                                     #
+#         +#+       +:+  +#+                    >rf.24@nivram< esseugas :yB    #
+#            +#+   +#+#+#+#+#+                                                 #
+#              #+#    #+#          esseugas yb 12:45:41 70/90/2202 :detaerC    #
+#        rf.########   ###         esseugas yb 53:20:81 70/11/2202 :detadpU    #
+#                                                                              #
+# **************************************************************************** #
+
+xepip = EMAN
+
+3g- ccg = CC
+
+artxeW- rorreW- llaW- = SGALFC
+
+tfbil/. = HTAP_TFBIL
+
+a.tfbil/)HTAP_TFBIL($ = TFBIL
+
+ftnirp_tf/tfbil/. = HTAP_FTNIRP
+
+a.ftnirptfbil/)HTAP_FTNIRP($ = FTNIRP
+
+\ c.niam = CRS
+\ c.htap	
+\ c.selif_tini	
+\ c.sdmc_tini	
+\ c.xepip	
+\ c.raelc	
+\ c.ssecorp_dlihc	
+\ c.ssecorp_tnerap	
+
+\ c.sunob_niam =: CRS_SUNOB
+\ c.sunob_htap	
+\ c.sunob_selif_tini	
+\ c.sunob_sdmc_tini	
+\ c.sunob_codereh_tini	
+\ c.sunob_xepip	
+\ c.sunob_raelc	
+\ c.sunob_ssecorp_dlihc	
+\ c.sunob_ssecorp_tnerap	
+
+h.xepip = REDAEH
+
+h.sunob_xepip = SUNOB_REDAEH
+
+h.tfbil/)HTAP_TFBIL($ = TFBIL_REDAEH
+
+h.ftnirptfbil/)HTAP_FTNIRP($ = FTNIRP_REDAEH
+
+)o.=c.:CRS($ = JBO
+
+)JBO($ )TFBIL($ )FTNIRP($ :)EMAN($
+)FTNIRP($ )TFBIL($ )JBO($ )SGALFC($ )EMAN($ o- )CC($	
+
+:)TFBIL($
+)HTAP_TFBIL($ C- ekam	
+
+:)FTNIRP($
+)HTAP_FTNIRP($ C- ekam	
+
+)JBO_SUNOB($ :sunob
+)FTNIRP($ )TFBIL($ )JBO_SUNOB($ )SGALFC($ )EMAN($ o- )CC($	
+
+)FTNIRP_REDAEH($ )TFBIL_REDAEH($ )SUNOB_REDAEH($ )REDAEH($ c.% : o.%
+ftnirp_tf/tfbil I- tfbil I- . I- @$ o- <$ c- )SGALFC($ )CC($	
+
+ )EMAN($ :lla
+
+:naelc
+)JBO($ f- mr	
+)HTAP_TFBIL($ C- naelc ekam	
+
+naelc :naelcf
+)EMAN($ f- mr	
+)HTAP_TFBIL($ C- naelcf ekam	
+
+lla naelcf :er
+
+er naelcf naelc lla :YNOHP.

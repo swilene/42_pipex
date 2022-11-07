@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:10:46 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/07 16:27:33 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:05:43 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 # include "libft/libft.h"
 # include "libft/ft_printf/libftprintf.h"
 
@@ -34,6 +34,8 @@ typedef struct s_args
 	char	**arg;
 	char	*prog;
 	int		**fd_pipe;
+	int		here_doc;
+	int		create_hd;
 	int		*pid;
 	int		exit_code;
 }	t_args;
@@ -42,7 +44,7 @@ int		init_files(int argc, char **argv, t_args *args);
 int		pipex(t_args *args, char **argv, int argc);
 char	**get_path(char **envp);
 void	free_str(char **str);
-void	close_files(t_args *args);
+void	close_files(t_args *args, int argc, int i);
 void	close_fd_pipe(t_args *args, int argc);
 int		init_cmds(t_args *args, char *cmd);
 void	parent_proc(t_args *args, int argc);

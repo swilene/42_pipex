@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_process.c                                    :+:      :+:    :+:   */
+/*   child_process_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saguesse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:04:59 by saguesse          #+#    #+#             */
-/*   Updated: 2022/11/07 16:39:38 by saguesse         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:02:11 by saguesse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	close_before_dup(t_args *args, int argc, int i, int j)
 {
-	while (j < argc - 4)
+	while (j < argc - 4 - args->here_doc)
 	{
 		if (i - 1 != j)
 		{
@@ -33,7 +33,7 @@ void	close_before_dup(t_args *args, int argc, int i, int j)
 		if (close(args->fd_file1) < 0)
 			perror(args->file1);
 	}
-	if (i != argc - 4 && args->fd_file2 > 0)
+	if (i != argc - 4 - args->here_doc && args->fd_file2 > 0)
 	{
 		if (close(args->fd_file2) < 0)
 			perror(args->file2);
@@ -52,7 +52,7 @@ void	close_after_dup(t_args *args, int argc, int i)
 		if (close(args->fd_pipe[i - 1][0]) < 0)
 			ft_printf("fd_pipe[%d][1]: %s\n", i - 1, strerror(errno));
 	}
-	if (i == argc - 4 && args->fd_file2 > 0)
+	if (i == argc - 4 - args->here_doc && args->fd_file2 > 0)
 	{
 		if (close(args->fd_file2) < 0)
 			perror(args->file2);
@@ -64,30 +64,31 @@ void	close_after_dup(t_args *args, int argc, int i)
 	}
 }
 
-void	free_before_exit(t_args *args, int argc)
+void	free_before_exit(t_args *args, int argc, int i)
 {
 	close_fd_pipe(args, argc);
-	close_files(args);
+	close_files(args, argc, i);
 	if (args->path)
 		free_str(args->path);
 	if (args->arg)
 		free_str(args->arg);
-	free_pipe(args, argc - 5);
+	free_pipe(args, argc - 5 - args->here_doc);
 	free(args->pid);
 }
 
 int	check_before_dup(t_args *args, char **argv, int argc, int i)
 {
-	if ((i == 0 && args->fd_file1 < 0) || (i == argc - 4 && args->fd_file2 < 0))
+	if ((i == 0 && args->fd_file1 < 0) || (i == argc - 4 - args->here_doc
+			&& args->fd_file2 < 0))
 	{
 		args->arg = NULL;
-		free_before_exit(args, argc);
+		free_before_exit(args, argc, i);
 		args->exit_code = 1;
 		return (1);
 	}
-	if (init_cmds(args, argv[i + 2]))
+	if (init_cmds(args, argv[i + 2 + args->here_doc]))
 	{
-		free_before_exit(args, argc);
+		free_before_exit(args, argc, i);
 		args->exit_code = 127;
 		return (2);
 	}
@@ -106,7 +107,7 @@ void	child_proc(t_args *args, char **argv, int argc, int i)
 		err_dup_r = dup2(args->fd_file1, STDIN_FILENO);
 	else
 		err_dup_r = dup2(args->fd_pipe[i - 1][0], STDIN_FILENO);
-	if (i == argc - 4 && args->fd_file2 > 0)
+	if (i == argc - 4 - args->here_doc && args->fd_file2 > 0)
 		err_dup_w = dup2(args->fd_file2, STDOUT_FILENO);
 	else
 		err_dup_w = dup2(args->fd_pipe[i][1], STDOUT_FILENO);
@@ -114,7 +115,7 @@ void	child_proc(t_args *args, char **argv, int argc, int i)
 	if (err_dup_r < 0 || err_dup_w < 0)
 	{
 		perror("dup2");
-		free_before_exit(args, argc);
+		free_before_exit(args, argc, i);
 		exit(2);
 	}
 	exit(execve(args->prog, args->arg, args->env));
